@@ -9,7 +9,6 @@ export const metadata: Metadata = {
     icon: "/icons/logo.svg",
   },
 };
-
 const HomeLayout = ({ children }: { children: ReactNode }) => {
   return (
     <main className="relative">
