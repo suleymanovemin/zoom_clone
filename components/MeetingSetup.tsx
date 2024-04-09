@@ -1,8 +1,17 @@
 "use client";
-import { VideoPreview, useCall } from "@stream-io/video-react-sdk";
+import {
+  DeviceSettings,
+  VideoPreview,
+  useCall,
+} from "@stream-io/video-react-sdk";
 import { useEffect, useState } from "react";
+import { Button } from "./ui/button";
 
-const MeetingSetup = () => {
+const MeetingSetup = ({
+  setIsSetupComplate,
+}: {
+  setIsSetupComplate: (value: boolean) => void;
+}) => {
   const [isMicCamToggleOn, setIsMicCamToggleOn] = useState(false);
   const call = useCall();
 
@@ -18,14 +27,37 @@ const MeetingSetup = () => {
       }
     }
   }, [isMicCamToggleOn, call?.microphone, call?.camera]);
-//   if (!call) {
-//     throw new Error("Call not found");
-//   }
+  //   if (!call) {
+  //     throw new Error("Call not found");
+  //   }
   return (
     <div className="flex h-screen w-full flex-col items-center justify-center gap-3 text-white">
       <h1 className="text-2xl font-bold">Setup</h1>
-  
       {call && <VideoPreview />}
+      <div className="flex h-16 items-center justify-center gap-3">
+        <label
+          htmlFor="check"
+          className="flex items-center gap-2 justify-center font-medium"
+        >
+          <input
+            type="checkbox"
+            checked={isMicCamToggleOn}
+            onChange={(e) => setIsMicCamToggleOn(e.target.checked)}
+            id="check"
+          />
+          Join with mic and camera off
+        </label>
+        <DeviceSettings />
+      </div>
+      <Button
+        className="rounded-md bg-green-500 px-4 py-2.5"
+        onClick={() => {
+          call?.join();
+          setIsSetupComplate(true);
+        }}
+      >
+        Join Meeting
+      </Button>
     </div>
   );
 };
