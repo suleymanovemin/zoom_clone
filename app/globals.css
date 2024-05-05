@@ -54,28 +54,30 @@
 }
 
 /* ==== clerk class override ===== */
-
+.cl-providerIcon__github {
+  filter: invert(1) !important;
+}
 .cl-userButtonPopoverActionButtonIcon {
-  color: white;
+  color: white !important;
 }
 
 .cl-logoBox {
-  height: 40px;
+  height: 40px !important;
 }
 .cl-dividerLine {
-  background: #252a41;
-  height: 2px;
+  background: #252a41 !important;
+  height: 2px !important;
 }
 
 .cl-socialButtonsIconButton {
-  border: 3px solid #565761;
+  border: 3px solid #565761 !important;
 }
 
 .cl-internal-wkkub3 {
-  color: white;
+  color: white !important;
 }
 .cl-userButtonPopoverActionButton {
-  color: white;
+  color: white !important;
 }
 
 /* =============================== */
