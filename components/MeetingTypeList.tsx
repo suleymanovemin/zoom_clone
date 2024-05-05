@@ -10,10 +10,11 @@ import { Call, useStreamVideoClient } from "@stream-io/video-react-sdk";
 import { useToast } from "@/components/ui/use-toast";
 import { Textarea } from "./ui/textarea";
 import ReactDatePicker from "react-datepicker";
+import { Input } from "./ui/input";
 const MeetingTypeList = () => {
   const router = useRouter();
   const [meetingState, setMeetingState] = useState<
-    "isScheduleMeeting" | "isJoininMeeting" | "isInstantMeeting" | undefined
+    "isScheduleMeeting" | "isInstantMeeting" | "isJoiningMeeting" | undefined
   >();
 
   const { user } = useUser();
@@ -103,7 +104,7 @@ const MeetingTypeList = () => {
         img="/icons/join-meeting.svg"
         title="Join Meeting"
         description="Via invition link"
-        handleClick={() => setMeetingState("isJoininMeeting")}
+        handleClick={() => setMeetingState("isJoiningMeeting")}
         className="bg-yellow-1"
       />
       {!callDetails ? (
@@ -146,8 +147,9 @@ const MeetingTypeList = () => {
           onClose={() => setMeetingState(undefined)}
           title="Meeting created"
           className="text-center"
-          handleClick={()=>{navigator.clipboard.writeText(meetingLink);
-            toast({title:"Link copied"})
+          handleClick={() => {
+            navigator.clipboard.writeText(meetingLink);
+            toast({ title: "Link copied" });
           }}
           image="/icons/checked.svg"
           buttonIcon="/icons/copy.svg"
@@ -162,6 +164,22 @@ const MeetingTypeList = () => {
         buttonText="Start Meeting"
         handleClick={createMeeting}
       />
+      <MeetingModal
+        isOpen={meetingState === "isJoiningMeeting"}
+        onClose={() => setMeetingState(undefined)}
+        title="Type the link here"
+        className="text-center"
+        buttonText="Join Meeting"
+        handleClick={() => {
+          router.push(values.link);
+        }}
+      >
+        <Input
+          onChange={(e) => setValues({ ...values, link: e.target.value })}
+          className="border-none bg-dark-3 focus-visible:ring-0 focus-visible:ring-offset-0"
+          placeholder="Meeting link"
+        />
+      </MeetingModal>
     </section>
   );
 };
