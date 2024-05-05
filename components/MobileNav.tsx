@@ -1,15 +1,12 @@
-"use client";
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetTrigger,
-} from "@/components/ui/sheet";
-import { sidebarLinks } from "@/constants";
-import { cn } from "@/lib/utils";
-import Image from "next/image";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+'use client';
+
+import Image from 'next/image';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+
+import { Sheet, SheetClose, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { sidebarLinks } from '@/constants';
+import { cn } from '@/lib/utils';
 
 const MobileNav = () => {
   const pathname = usePathname();
@@ -20,51 +17,47 @@ const MobileNav = () => {
         <SheetTrigger asChild>
           <Image
             src="/icons/hamburger.svg"
-            alt="hamburger menu"
             width={36}
             height={36}
+            alt="hamburger icon"
             className="cursor-pointer sm:hidden"
           />
         </SheetTrigger>
-        <SheetContent side="left" className="bg-dark-1">
+        <SheetContent side="left" className="border-none bg-dark-1">
           <Link href="/" className="flex items-center gap-1">
             <Image
               src="/icons/logo.svg"
-              alt="Zoom Logo"
               width={32}
               height={32}
-              className="max-sm:size-10"
+              alt="yoom logo"
             />
-            <p className="text-[26px] font-extrabold text-white max-sm:hidden">
-              Zoom
-            </p>
+            <p className="text-[26px] font-extrabold text-white">YOOM</p>
           </Link>
-
           <div className="flex h-[calc(100vh-72px)] flex-col justify-between overflow-y-auto">
             <SheetClose asChild>
-              <section className="flex h-full flex-col gap-6 pt-16 text-white">
-                {sidebarLinks.map((link: any) => {
-                  const isActive =
-                  pathname === link.route || pathname.startsWith(`${link.route}/`);
+              <section className=" flex h-full flex-col gap-6 pt-16 text-white">
+                {sidebarLinks.map((item) => {
+                  const isActive = pathname === item.route;
+
                   return (
-                    <SheetClose asChild key={link.label}>
+                    <SheetClose asChild key={item.route}>
                       <Link
-                        href={link.route}
-                        key={link.label}
+                        href={item.route}
+                        key={item.label}
                         className={cn(
-                          "flex gap-4 items-center p-4 rounded-lg w-full max-w-60",
+                          'flex gap-4 items-center p-4 rounded-lg w-full max-w-60',
                           {
-                            "bg-blue-1": isActive,
+                            'bg-blue-1': isActive,
                           }
                         )}
                       >
                         <Image
-                          src={link.imgUrl}
-                          alt={link.label}
+                          src={item.imgURL}
+                          alt={item.label}
                           width={20}
                           height={20}
                         />
-                        <p className="font-semibold">{link.label}</p>
+                        <p className="font-semibold">{item.label}</p>
                       </Link>
                     </SheetClose>
                   );

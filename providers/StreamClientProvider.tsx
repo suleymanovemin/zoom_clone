@@ -1,26 +1,27 @@
-"use client";
-import { tokenProvider } from "@/actions/stream.actions";
-import Loader from "@/components/Loader";
-import { useUser } from "@clerk/nextjs";
-import { StreamVideoClient, StreamVideo } from "@stream-io/video-react-sdk";
-import { useEffect, useState } from "react";
+'use client';
 
-const apiKey = process.env.NEXT_PUBLIC_STREAM_API_KEY;
+import { ReactNode, useEffect, useState } from 'react';
+import { StreamVideoClient, StreamVideo } from '@stream-io/video-react-sdk';
+import { useUser } from '@clerk/nextjs';
 
-const StreamVideoProvider = ({ children }: { children: React.ReactNode }) => {
+import { tokenProvider } from '@/actions/stream.actions';
+import Loader from '@/components/Loader';
+
+const API_KEY = process.env.NEXT_PUBLIC_STREAM_API_KEY;
+
+const StreamVideoProvider = ({ children }: { children: ReactNode }) => {
   const [videoClient, setVideoClient] = useState<StreamVideoClient>();
-
   const { user, isLoaded } = useUser();
 
   useEffect(() => {
     if (!isLoaded || !user) return;
-    if (!apiKey) throw new Error("Stream API key not found");
+    if (!API_KEY) throw new Error('Stream API key is missing');
 
     const client = new StreamVideoClient({
-      apiKey,
+      apiKey: API_KEY,
       user: {
         id: user?.id,
-        name: user?.username || user.id,
+        name: user?.username || user?.id,
         image: user?.imageUrl,
       },
       tokenProvider,
